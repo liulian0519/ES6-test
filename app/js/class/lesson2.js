@@ -23,6 +23,15 @@
     [a,b,c=3] = [1,2];
     console.log(a,b,c); //1 2 3  如果删去c=3 则输出undifined
 }
+//z字符串解构赋值
+{
+    const [a,b,c,d,e] = 'hello';
+    console.log(a,b,c,d,e); //h e l l o
+}
+{
+    let {length:len} = 'hello';
+    console.log(len); //5
+}
 //数组使用场景
 //变量交换
 {
@@ -83,5 +92,26 @@
     let {title:esTitle,test:[{title:cnTitle}]}=metData;
     console.log(esTitle,cnTitle); //hahah  test
 }
+//遍历Map结构
+var map = new Map();
+map.set('first','hello');
+map.set('second','world');
+
+for(let [key,value] of map){
+    console.log(key + " is " + value);
+}
+// //只获取键名
+// for(let [key] of map){
+//     //
+// }
+// //只获取键值
+// for(let [value] of map){
+//     //
+// }
+
+
+
+
+
 
 
