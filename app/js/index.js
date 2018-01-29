@@ -1,3 +1,5 @@
+import './class/lesson1'
+
 class  Test{
     constructor(){
         this.a = 'hello'
