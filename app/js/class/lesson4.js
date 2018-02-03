@@ -39,3 +39,69 @@
     }
 
 }
+
+{
+    let str='string';
+    console.log('include',str.includes('c'));  //false
+    console.log('start',str.startsWith('str')); //true
+    console.log('end',str.endsWith('ng'));      //true
+}
+{
+    let str='abc';
+    console.log(str.repeat(2));
+}
+{
+    // let name = "list";
+    // let info = "hello world";
+    // //字符串模板
+    // let m=`i am ${name},${info}`;
+    // console.log(m);
+
+    //模板字符串嵌套
+    const tmp1 = addrs =>`
+        <table>
+            ${addrs.map(addr=>`
+                <tr><td>${addr.first}</td></tr>
+                <tr><td>${addr.last}</td></tr>
+            `).join('')}
+        </table>
+    `;
+
+    const data = [
+        {first:'<Jane>',last :'Bond'},
+        {first:'Lars',last :'<Croft>'},
+    ];
+    console.log(tmp1(data));
+
+}
+{
+    //补白
+    console.log('1'.padStart(2,'0'));  //01
+    console.log('1'.padEnd(2,'0'));   //10
+}
+///标签模板
+{
+    let user={
+        name:'liulian',
+        info:'a student'
+    };
+    console.log(abc`i am ${user.name},${user.info}`);
+    function abc(s,v1,v2){
+        console.log(s,v1,v2);
+        return s+v1+v2
+    }
+}
+
+{
+    console.log(String.raw`hi \n ${2+3}`);
+}
+
+
+
+
+
+
+
+
+
+

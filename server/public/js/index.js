@@ -4000,7 +4000,7 @@ module.exports = __webpack_require__(126);
 
 __webpack_require__(127);
 
-__webpack_require__(330);
+__webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./class/lesson5\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } } // import './class/lesson1'
 // import './class/lesson2'
@@ -9602,74 +9602,6 @@ module.exports = function (regExp, replace) {
     return String(it).replace(regExp, replacer);
   };
 };
-
-/***/ }),
-/* 330 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-{
-    console.log('a', 'a'); //a
-    console.log('s', '\u20BB7'); //乱码+7当成连个字符
-
-    console.log('s', '\uD842\uDFB7');
-}
-//codepointat
-{
-    var s = '𠮷';
-    console.log('length', s.length); //2
-    // es5
-    console.log(s.charAt(0));
-    console.log(s.charAt(1));
-    console.log(s.charCodeAt(0)); //码职55362
-    console.log(s.charCodeAt(1)); //码职57271
-
-    var s1 = '𠮷a';
-    console.log('length', s1.length); //3
-    console.log('code', s1.codePointAt(0).toString(16)); //20bb7
-    console.log('code', s1.codePointAt(1)); //57271
-    console.log('code', s1.codePointAt(2)); //97
-}
-//fromcodepoint
-{
-    console.log(String.fromCharCode('0x20bb7')); //es5  乱码
-    console.log(String.fromCodePoint('0x20bb7')); //es6
-}
-//遍历器接口
-{
-    var str = '\uD842\uDFB7abc';
-    //es5
-    for (var i = 0; i < str.length; i++) {
-        console.log('es5', str[i]);
-    }
-    //es6
-    var _iteratorNormalCompletion = true;
-    var _didIteratorError = false;
-    var _iteratorError = undefined;
-
-    try {
-        for (var _iterator = str[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var _i = _step.value;
-
-            console.log('es6', _i);
-        }
-    } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-    } finally {
-        try {
-            if (!_iteratorNormalCompletion && _iterator.return) {
-                _iterator.return();
-            }
-        } finally {
-            if (_didIteratorError) {
-                throw _iteratorError;
-            }
-        }
-    }
-}
 
 /***/ })
 /******/ ]);
