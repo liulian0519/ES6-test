@@ -9597,88 +9597,29 @@ module.exports = function (regExp, replace) {
 
 
 {
-    var test = function test(x) {
-        var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'world';
-
-        console.log('默认', x, y);
+    var a = 1;
+    var b = 2;
+    var es5 = {
+        a: a,
+        b: b
     };
-
-    test('hello'); //hello world
-    test('hello', 'liulian'); //hello liulian
-}
-
-{
-    var test2 = function test2(x) {
-        var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : x;
-
-        console.log('作用域', x, y);
+    var es6 = {
+        a: a,
+        b: b
     };
+    console.log(es5, es6);
 
-    var x = 'test';
-
-    test2('kill'); //kill kill
-}
-{
-    var test3 = function test3() {
-        for (var _len = arguments.length, arg = Array(_len), _key = 0; _key < _len; _key++) {
-            arg[_key] = arguments[_key];
-        }
-
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
-
-        try {
-            for (var _iterator = arg[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                var v = _step.value;
-
-                console.log('rest', v);
-            }
-        } catch (err) {
-            _didIteratorError = true;
-            _iteratorError = err;
-        } finally {
-            try {
-                if (!_iteratorNormalCompletion && _iterator.return) {
-                    _iterator.return();
-                }
-            } finally {
-                if (_didIteratorError) {
-                    throw _iteratorError;
-                }
-            }
+    var es5_method = {
+        hello: function hello() {
+            console.log('hello');
         }
     };
-
-    test3(1, 2, 3, 4, 'a');
-}
-
-{
-    var _console;
-
-    (_console = console).log.apply(_console, ['a'].concat([1, 2, 3]));
-}
-{
-    var arrow = function arrow(v) {
-        return v * 2;
+    var es6_method = {
+        hello: function hello() {
+            console.log('hello');
+        }
     };
-    var srr = function srr() {
-        return 5;
-    };
-    console.log(arrow(3));
-    console.log(srr());
-}
-//尾调用
-{
-    var tail = function tail(x) {
-        console.log('tail', x);
-    };
-
-    var fx = function fx(x) {
-        return tail(x);
-    };
-
-    fx(123);
+    console.log(es5_method.hello(), es6_method.hello());
 }
 
 /***/ })
