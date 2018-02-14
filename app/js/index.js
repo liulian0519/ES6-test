@@ -1,4 +1,4 @@
 // import './class/lesson1'
 // import './class/lesson2'
 import 'babel-polyfill'
-import './class/lesson8'
+import './class/lesson9'

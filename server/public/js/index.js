@@ -9601,59 +9601,35 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 {
-    var a = 1;
-    var b = 2;
-    var es5 = {
-        a: a,
-        b: b
-    };
-    var es6 = {
-        a: a,
-        b: b
-    };
-    console.log(es5, es6);
-
-    var es5_method = {
-        hello: function hello() {
-            console.log('hello');
-        }
-    };
-    var es6_method = {
-        hello: function hello() {
-            console.log('hello');
-        }
-    };
-    console.log(es5_method.hello(), es6_method.hello());
+    //声明
+    var a1 = Symbol();
+    var a2 = Symbol();
+    console.log(a1 === a2); //false
+    var a3 = Symbol.for('a3');
+    var a4 = Symbol.for('a3');
+    console.log(a3 === a4); //true
 }
 {
-    //属性表达式
-    var _a = 'b';
-    var _es = {
-        a: 'c'
-    };
-    var _es2 = _defineProperty({}, _a, 'c');
-    console.log(_es, _es2);
-}
-{
-    //新增api
-    console.log('字符串', Object.is('abc', 'abc'), 'abc' === 'abc');
-    console.log('数组', Object.is([], []), [] === []);
+    var _obj;
 
-    console.log('copy', Object.assign({ a: 'a' }, { a: 'b' })); //浅复制
+    var _a = Symbol.for('abc');
+    var obj = (_obj = {}, _defineProperty(_obj, _a, '123'), _defineProperty(_obj, 'abc', 345), _defineProperty(_obj, 'c', 456), _obj);
+    console.log(obj); //{abc: 345, c: 456, Symbol(abc): "123"}
 
-    var test = { k: 123, o: 456 };
     var _iteratorNormalCompletion = true;
     var _didIteratorError = false;
     var _iteratorError = undefined;
 
     try {
-        for (var _iterator = Object.entries(test)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        for (var _iterator = Object.entries(obj)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
             var _step$value = _slicedToArray(_step.value, 2),
                 key = _step$value[0],
-                value = _step$value[1];
+                values = _step$value[1];
 
-            console.log([key, value]);
+            console.log('let of', key, values); // abc 345  c 456
         }
+        //新的api
+        //只拿到symbol
     } catch (err) {
         _didIteratorError = true;
         _iteratorError = err;
@@ -9668,14 +9644,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             }
         }
     }
-}
-{
-    //扩展运算符
-    // let {a,b,...c}={a:'teee',b:'kill',c:'ddd',d:'sss'};
-    // c={
-    //     c:'ddd',
-    //     d:'sss'
-    // }
+
+    Object.getOwnPropertySymbols(obj).forEach(function (item) {
+        console.log(obj[item]); //123
+    });
+    //所有的key value
+    Reflect.ownKeys(obj).forEach(function (item) {
+        console.log('ownKeys', item, obj[item]);
+        //ownKeys abc 345  c 456  Symbol(abc) 123
+    });
 }
 
 /***/ })
