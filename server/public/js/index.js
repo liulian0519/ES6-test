@@ -9771,6 +9771,41 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
     weakmap.set(o, 123);
     console.log(weakmap.get(o)); //123
 }
+//数据结构横向对比 增删改查
+{
+    //map
+    var _map2 = new Map();
+    var array = [];
+    //增
+    _map2.set('t', 1);
+    array.push({ t: 1 });
+    console.info('map-array', _map2, array);
+    //查
+    var map_exist = _map2.has('t');
+    var array_exist = array.find(function (item) {
+        return item.t;
+    });
+    console.info('map_array', map_exist, array_exist);
+    //改
+    _map2.set('t', 2);
+    array.forEach(function (item) {
+        return item.t ? item.t = 2 : '';
+    });
+    console.info('map-array', _map2, array);
+    //删
+    _map2.delete('t');
+    var index = array.findIndex(function (item) {
+        return item.t;
+    });
+    array.splice(index, 1);
+    console.info('map-array', _map2, array);
+}
+{
+    //set
+    var set = new Set();
+    var _array = [];
+    //增
+}
 
 /***/ })
 /******/ ]);
