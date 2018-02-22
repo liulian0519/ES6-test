@@ -9805,6 +9805,60 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
     var set = new Set();
     var _array = [];
     //增
+    set.add({ t: 1 });
+    _array.push({ t: 1 });
+    console.log('set-array', set, _array);
+    //查
+    var set_exist = set.has({ t: 1 }); //查地址
+    var _array_exist = _array.find(function (item) {
+        return item.t;
+    });
+    console.log('set-array', set_exist, _array_exist);
+    //改
+    set.forEach(function (item) {
+        return item.t ? item.t = 2 : '';
+    });
+    _array.forEach(function (item) {
+        return item.t ? item.t = 2 : '';
+    });
+    console.log('set-array', set, _array);
+    //删
+    set.forEach(function (item) {
+        return item.t ? set.delete(item) : '';
+    });
+    var _index = _array.findIndex(function (item) {
+        return item.t;
+    });
+    _array.splice(_index, 1);
+    console.info('set-array', set, _array);
+}
+{
+    //object
+    var item = { t: 1 };
+    var _map3 = new Map();
+    var _set = new Set();
+    var obj = {};
+    //增
+    _map3.set('t', 1);
+    _set.add(item);
+    obj['t'] = 1;
+    console.log('set-map-obj', _map3, _set, obj);
+    //查
+    console.log({
+        map_exist: _map3.has('t'),
+        obj_exist: 't' in obj,
+        set_exist: _set.has(item)
+    });
+    //改
+    _map3.set('t', 2);
+    item.t = 2;
+    obj['t'] = 2;
+    console.log('set-map-obj', _map3, _set, obj);
+    //删
+    _map3.delete('t');
+    _set.delete(item);
+    delete obj['t'];
+    console.log('set-map-obj', _map3, _set, obj);
 }
 
 /***/ })
