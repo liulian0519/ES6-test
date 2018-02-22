@@ -9596,269 +9596,124 @@ module.exports = function (regExp, replace) {
 "use strict";
 
 
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 {
-    //set
-    var list = new Set();
-    list.add(5);
-    list.add(7);
-    console.log('size', list.size); //2
-}
-{
-    var arr = [1, 2, 3, 4];
-    var _list = new Set(arr);
-    console.log('size', _list.size); //4
-}
-{
-    var _list2 = new Set();
-    _list2.add(1);
-    _list2.add(2);
-    _list2.add(1);
-    console.log(_list2); //不报错 添加无效 1 2
-    //去重
-    var _arr = [1, 2, 3, 4, 1, 2];
-    var list2 = new Set(_arr);
-    console.log('unq', list2); //1 2 3 4
+    var obj = {
+        time: '2018-02-22',
+        name: 'soul',
+        _r: 123
+    };
+    var monitor = new Proxy(obj, {
+        //拦截对象属性的读取
+        get: function get(target, key) {
+            return target[key].replace('2018', '2019');
+        },
 
-    var arr1 = [1, 2, 3, 4, "1", 2];
-    var list3 = new Set(arr1);
-    console.log('unq', list3); //1 2 3 4 '1''
-}
-{
-    var _arr2 = ['add', 'delete', 'clear', 'has'];
-    var _list3 = new Set(_arr2);
-    console.log('has', _list3.has('add')); //true
-    console.log('delete', _list3.delete('add'), _list3.has('add'), _list3); //true false  delete clear has
-    _list3.clear();
-    console.log('list', _list3); //0 kong
-}
-{
-    var _arr3 = ['add', 'delete', 'clear', 'has'];
-    var _list4 = new Set(_arr3);
-
-    var _iteratorNormalCompletion = true;
-    var _didIteratorError = false;
-    var _iteratorError = undefined;
-
-    try {
-        for (var _iterator = _list4.keys()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var key = _step.value;
-
-            console.log('keys', key);
-        }
-    } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-    } finally {
-        try {
-            if (!_iteratorNormalCompletion && _iterator.return) {
-                _iterator.return();
+        //拦截对象设置属性
+        set: function set(target, key, value) {
+            if (key === 'name') {
+                return target[key] = value;
+            } else {
+                return target[key];
             }
-        } finally {
-            if (_didIteratorError) {
-                throw _iteratorError;
+        },
+
+        //拦截key in object操作
+        has: function has(target, key) {
+            if (key === 'name') {
+                return target[key];
+            } else {
+                return false;
             }
-        }
-    }
+        },
 
-    var _iteratorNormalCompletion2 = true;
-    var _didIteratorError2 = false;
-    var _iteratorError2 = undefined;
-
-    try {
-        for (var _iterator2 = _list4.values()[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-            var values = _step2.value;
-
-            console.log('values', values);
-        }
-    } catch (err) {
-        _didIteratorError2 = true;
-        _iteratorError2 = err;
-    } finally {
-        try {
-            if (!_iteratorNormalCompletion2 && _iterator2.return) {
-                _iterator2.return();
+        //拦截delete
+        deleteProperty: function deleteProperty(target, key) {
+            if (key.indexOf('_') > -1) {
+                delete target[key];
+                return true;
+            } else {
+                return target[key];
             }
-        } finally {
-            if (_didIteratorError2) {
-                throw _iteratorError2;
-            }
+        },
+
+        //Object.keys  object.getOwnProrertySymboles
+        ownKeys: function ownKeys(target) {
+            return Object.keys(target).filter(function (item) {
+                return item != 'time';
+            });
         }
-    }
-
-    var _iteratorNormalCompletion3 = true;
-    var _didIteratorError3 = false;
-    var _iteratorError3 = undefined;
-
-    try {
-        for (var _iterator3 = _list4[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-            var value = _step3.value;
-
-            console.log('list', value);
-        }
-    } catch (err) {
-        _didIteratorError3 = true;
-        _iteratorError3 = err;
-    } finally {
-        try {
-            if (!_iteratorNormalCompletion3 && _iterator3.return) {
-                _iterator3.return();
-            }
-        } finally {
-            if (_didIteratorError3) {
-                throw _iteratorError3;
-            }
-        }
-    }
-
-    var _iteratorNormalCompletion4 = true;
-    var _didIteratorError4 = false;
-    var _iteratorError4 = undefined;
-
-    try {
-        for (var _iterator4 = _list4.entries()[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-            var _step4$value = _slicedToArray(_step4.value, 2),
-                _key = _step4$value[0],
-                _value = _step4$value[1];
-
-            console.log('entries', _key, _value);
-        }
-    } catch (err) {
-        _didIteratorError4 = true;
-        _iteratorError4 = err;
-    } finally {
-        try {
-            if (!_iteratorNormalCompletion4 && _iterator4.return) {
-                _iterator4.return();
-            }
-        } finally {
-            if (_didIteratorError4) {
-                throw _iteratorError4;
-            }
-        }
-    }
-
-    _list4.forEach(function (item) {
-        console.log(item);
     });
-}
-//WeakSet
-{
-    var weaklist = new WeakSet();
-    var arg = {};
-    weaklist.add(arg);
-    //weaklist.add(2);
-    console.log(weaklist);
-}
-//map
-{
-    var map = new Map();
-    var _arr4 = ['123'];
-    map.set(_arr4, 456);
-    console.log(map, map.get(_arr4));
+    console.log('get', monitor.time);
+
+    monitor.time = '2007';
+    monitor.name = 'liulian';
+    console.log('set', monitor);
+
+    console.log('has', 'name' in monitor, 'time' in monitor);
+
+    // delete monitor.time;
+    // console.log('delete',monitor);
+    // delete  monitor._r;
+    // console.log('delete',monitor);
+
+    console.log('ownkeys', Object.keys(monitor)); //name _r
 }
 {
-    var _map = new Map([['a', 123], ['b', 456]]);
-    console.log(_map);
+    //reflect
+    var _obj = {
+        time: '2018-02-22',
+        name: 'soul',
+        _r: 123
+    };
+    console.log('reflect-get', Reflect.get(_obj, 'time'));
+    Reflect.set(_obj, 'name', 'liulian');
+    console.log(_obj);
+    console.log(Reflect.has(_obj, 'name'));
+}
+{
+    var validator = function validator(target, _validator) {
+        return new Proxy(target, {
+            _validator: _validator,
+            set: function set(target, key, value, proxy) {
+                if (target.hasOwnProperty(key)) {
+                    var va = this._validator[key];
+                    if (!!va(value)) {
+                        return Reflect.set(target, key, value, proxy);
+                    } else {
+                        throw Error('\u4E0D\u80FD\u8BBE\u7F6E' + key + '\u5230' + value);
+                    }
+                } else {
+                    throw Error(key + '\u4E0D\u5B58\u5728');
+                }
+            }
+        });
+    };
 
-    console.log('size', _map.size); //delete 与set相同  清空也是 clear 遍历也相同
-}
-//WeakMap
-{
-    var weakmap = new WeakMap();
-    var o = {};
-    weakmap.set(o, 123);
-    console.log(weakmap.get(o)); //123
-}
-//数据结构横向对比 增删改查
-{
-    //map
-    var _map2 = new Map();
-    var array = [];
-    //增
-    _map2.set('t', 1);
-    array.push({ t: 1 });
-    console.info('map-array', _map2, array);
-    //查
-    var map_exist = _map2.has('t');
-    var array_exist = array.find(function (item) {
-        return item.t;
-    });
-    console.info('map_array', map_exist, array_exist);
-    //改
-    _map2.set('t', 2);
-    array.forEach(function (item) {
-        return item.t ? item.t = 2 : '';
-    });
-    console.info('map-array', _map2, array);
-    //删
-    _map2.delete('t');
-    var index = array.findIndex(function (item) {
-        return item.t;
-    });
-    array.splice(index, 1);
-    console.info('map-array', _map2, array);
-}
-{
-    //set
-    var set = new Set();
-    var _array = [];
-    //增
-    set.add({ t: 1 });
-    _array.push({ t: 1 });
-    console.log('set-array', set, _array);
-    //查
-    var set_exist = set.has({ t: 1 }); //查地址
-    var _array_exist = _array.find(function (item) {
-        return item.t;
-    });
-    console.log('set-array', set_exist, _array_exist);
-    //改
-    set.forEach(function (item) {
-        return item.t ? item.t = 2 : '';
-    });
-    _array.forEach(function (item) {
-        return item.t ? item.t = 2 : '';
-    });
-    console.log('set-array', set, _array);
-    //删
-    set.forEach(function (item) {
-        return item.t ? set.delete(item) : '';
-    });
-    var _index = _array.findIndex(function (item) {
-        return item.t;
-    });
-    _array.splice(_index, 1);
-    console.info('set-array', set, _array);
-}
-{
-    //object
-    var item = { t: 1 };
-    var _map3 = new Map();
-    var _set = new Set();
-    var obj = {};
-    //增
-    _map3.set('t', 1);
-    _set.add(item);
-    obj['t'] = 1;
-    console.log('set-map-obj', _map3, _set, obj);
-    //查
-    console.log({
-        map_exist: _map3.has('t'),
-        obj_exist: 't' in obj,
-        set_exist: _set.has(item)
-    });
-    //改
-    _map3.set('t', 2);
-    item.t = 2;
-    obj['t'] = 2;
-    console.log('set-map-obj', _map3, _set, obj);
-    //删
-    _map3.delete('t');
-    _set.delete(item);
-    delete obj['t'];
-    console.log('set-map-obj', _map3, _set, obj);
+    var personValidators = {
+        name: function name(val) {
+            return typeof val === 'string';
+        },
+        age: function age(val) {
+            return typeof val == 'number' && val > 18;
+        }
+    };
+
+    var Person = function Person(name, age) {
+        _classCallCheck(this, Person);
+
+        this.name = name;
+        this.age = age;
+        return validator(this, personValidators);
+    };
+
+    var person = new Person('liulian', 20);
+    console.log(person);
+    person.name = 48;
+    console.log(person);
+    // person.phone = '111';
+    // console.log(person);
 }
 
 /***/ })
