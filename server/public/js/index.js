@@ -9596,120 +9596,91 @@ module.exports = function (regExp, replace) {
 "use strict";
 
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 {
-    var ajax = function ajax(callback) {
-        console.log('执行1');
-        setTimeout(function () {
-            callback && callback.call();
-        }, 1000);
-    };
-    ajax(function () {
-        console.log('timeout1');
-    });
+    var arr = ['hello', 'world'];
+    var map = arr[Symbol.iterator]();
+    console.log(map.next());
+    console.log(map.next());
+    console.log(map.next());
 }
 {
-    var _ajax = function _ajax() {
-        console.log('zhixing');
-        return new Promise(function (resolve, reject) {
-            setTimeout(function () {
-                resolve();
-            }, 1000);
-        });
-    };
-    _ajax().then(function () {
-        console.log('promise', 'timeout2');
-    });
-}
-{
-    var _ajax2 = function _ajax2() {
-        console.log('执行3');
-        return new Promise(function (resolve, reject) {
-            setTimeout(function () {
-                resolve();
-            }, 1000);
-        });
-    };
-    _ajax2().then(function () {
-        return new Promise(function (resolve, reject) {
-            setTimeout(function () {
-                resolve();
-            }, 2000);
-        });
-    }).then(function () {
-        console.log('timeout3');
-    });
-}
-{
-    var _ajax3 = function _ajax3(num) {
-        console.log('zhixing4');
-        return new Promise(function (resolve, reject) {
-            if (num > 5) {
-                resolve();
-            } else {
-                throw new Error('出错了');
+    var obj = _defineProperty({
+        start: [1, 3, 2],
+        end: [7, 9, 8]
+    }, Symbol.iterator, function () {
+        var self = this;
+        var index = 0;
+        var arr = self.start.concat(self.end);
+        var len = arr.length;
+        return {
+            next: function next() {
+                if (index < len) {
+                    return {
+                        value: arr[index++],
+                        done: false
+                    };
+                } else {
+                    return {
+                        value: arr[index++],
+                        done: true
+                    };
+                }
             }
-        });
-    };
-    _ajax3(6).then(function () {
-        console.log('log', 6);
-    }).catch(function (err) {
-        console.log('catch', err);
+        };
     });
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
 
-    _ajax3(3).then(function () {
-        console.log('log', 3);
-    }).catch(function (err) {
-        console.log('catch', err);
-    });
+    try {
+        for (var _iterator = obj[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var key = _step.value;
+
+            console.log(key);
+        }
+    } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+    } finally {
+        try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+                _iterator.return();
+            }
+        } finally {
+            if (_didIteratorError) {
+                throw _iteratorError;
+            }
+        }
+    }
 }
 {
-    //所有图片加载完成再加载到页面上
-    var loadImage = function loadImage(src) {
-        return new Promise(function (resolve, reject) {
-            var img = document.createElement('img');
-            img.src = src;
-            img.onload = function () {
-                resolve(img);
-            };
-            img.onerror = function () {
-                reject(err);
-            };
-        });
-    };
+    var _arr = ['hello', 'world'];
+    var _iteratorNormalCompletion2 = true;
+    var _didIteratorError2 = false;
+    var _iteratorError2 = undefined;
 
-    var showImages = function showImages(imgs) {
-        imgs.forEach(function (img) {
-            document.body.appendChild(img);
-            img.style.height = '200px';
-            img.style.width = '200px';
-        });
-    };
+    try {
+        for (var _iterator2 = _arr[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+            var value = _step2.value;
 
-    Promise.all([loadImage('http://pic29.photophoto.cn/20131204/0034034499213463_b.jpg'), loadImage('http://pic2.ooopic.com/12/42/25/02bOOOPIC95_1024.jpg'), loadImage('http://img3.3lian.com/2013/c2/78/d/38.jpg')]).then(showImages);
-}
-{
-    //有一个图片加载完成就添加到页面上
-    var _loadImage = function _loadImage(src) {
-        return new Promise(function (resolve, reject) {
-            var img = document.createElement('img');
-            img.src = src;
-            img.onload = function () {
-                resolve(img);
-            };
-            img.onerror = function () {
-                reject(err);
-            };
-        });
-    };
-
-    var showImage = function showImage(img) {
-        document.body.appendChild(img);
-        img.style.height = '400px';
-        img.style.width = '400px';
-        img.style.marginLeft = '100px';
-    };
-
-    Promise.race([_loadImage('http://pic29.photophoto.cn/20131204/0034034499213463_b.jpg'), _loadImage('http://pic2.ooopic.com/12/42/25/02bOOOPIC95_1024.jpg'), _loadImage('http://img3.3lian.com/2013/c2/78/d/38.jpg')]).then(showImage);
+            console.log('value', value);
+        }
+    } catch (err) {
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
+    } finally {
+        try {
+            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                _iterator2.return();
+            }
+        } finally {
+            if (_didIteratorError2) {
+                throw _iteratorError2;
+            }
+        }
+    }
 }
 
 /***/ })
