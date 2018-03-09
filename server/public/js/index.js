@@ -9596,156 +9596,120 @@ module.exports = function (regExp, replace) {
 "use strict";
 
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
 {
-    //基本定义额生成实例
-    var Parent = function Parent() {
-        var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'liulian';
+    var ajax = function ajax(callback) {
+        console.log('执行1');
+        setTimeout(function () {
+            callback && callback.call();
+        }, 1000);
+    };
+    ajax(function () {
+        console.log('timeout1');
+    });
+}
+{
+    var _ajax = function _ajax() {
+        console.log('zhixing');
+        return new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                resolve();
+            }, 1000);
+        });
+    };
+    _ajax().then(function () {
+        console.log('promise', 'timeout2');
+    });
+}
+{
+    var _ajax2 = function _ajax2() {
+        console.log('执行3');
+        return new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                resolve();
+            }, 1000);
+        });
+    };
+    _ajax2().then(function () {
+        return new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                resolve();
+            }, 2000);
+        });
+    }).then(function () {
+        console.log('timeout3');
+    });
+}
+{
+    var _ajax3 = function _ajax3(num) {
+        console.log('zhixing4');
+        return new Promise(function (resolve, reject) {
+            if (num > 5) {
+                resolve();
+            } else {
+                throw new Error('出错了');
+            }
+        });
+    };
+    _ajax3(6).then(function () {
+        console.log('log', 6);
+    }).catch(function (err) {
+        console.log('catch', err);
+    });
 
-        _classCallCheck(this, Parent);
-
-        this.name = name;
+    _ajax3(3).then(function () {
+        console.log('log', 3);
+    }).catch(function (err) {
+        console.log('catch', err);
+    });
+}
+{
+    //所有图片加载完成再加载到页面上
+    var loadImage = function loadImage(src) {
+        return new Promise(function (resolve, reject) {
+            var img = document.createElement('img');
+            img.src = src;
+            img.onload = function () {
+                resolve(img);
+            };
+            img.onerror = function () {
+                reject(err);
+            };
+        });
     };
 
-    var s_parent = new Parent('soul');
-    console.log(s_parent);
-}
-{
-    //继承
-    var _Parent = function _Parent() {
-        var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'liulian';
-
-        _classCallCheck(this, _Parent);
-
-        this.name = name;
+    var showImages = function showImages(imgs) {
+        imgs.forEach(function (img) {
+            document.body.appendChild(img);
+            img.style.height = '200px';
+            img.style.width = '200px';
+        });
     };
 
-    var Child = function (_Parent2) {
-        _inherits(Child, _Parent2);
-
-        function Child() {
-            _classCallCheck(this, Child);
-
-            return _possibleConstructorReturn(this, (Child.__proto__ || Object.getPrototypeOf(Child)).apply(this, arguments));
-        }
-
-        return Child;
-    }(_Parent);
-
-    console.log(new Child());
+    Promise.all([loadImage('http://pic29.photophoto.cn/20131204/0034034499213463_b.jpg'), loadImage('http://pic2.ooopic.com/12/42/25/02bOOOPIC95_1024.jpg'), loadImage('http://img3.3lian.com/2013/c2/78/d/38.jpg')]).then(showImages);
 }
 {
-    //继承
-    var _Parent3 = function _Parent3() {
-        var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'liulian';
-
-        _classCallCheck(this, _Parent3);
-
-        this.name = name;
+    //有一个图片加载完成就添加到页面上
+    var _loadImage = function _loadImage(src) {
+        return new Promise(function (resolve, reject) {
+            var img = document.createElement('img');
+            img.src = src;
+            img.onload = function () {
+                resolve(img);
+            };
+            img.onerror = function () {
+                reject(err);
+            };
+        });
     };
 
-    var _Child = function (_Parent4) {
-        _inherits(_Child, _Parent4);
+    var showImage = function showImage(img) {
+        document.body.appendChild(img);
+        img.style.height = '400px';
+        img.style.width = '400px';
+        img.style.marginLeft = '100px';
+    };
 
-        function _Child() {
-            var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'child';
-
-            _classCallCheck(this, _Child);
-
-            var _this2 = _possibleConstructorReturn(this, (_Child.__proto__ || Object.getPrototypeOf(_Child)).call(this, name));
-
-            _this2.type = 'child';
-            return _this2;
-        }
-
-        return _Child;
-    }(_Parent3);
-
-    console.log(new _Child('hello'));
-}
-{
-    //getter setter
-    var _Parent5 = function () {
-        function _Parent5() {
-            var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'liulian';
-
-            _classCallCheck(this, _Parent5);
-
-            this.name = name;
-        }
-
-        _createClass(_Parent5, [{
-            key: 'longName',
-            get: function get() {
-                return 'mk' + this.name;
-            },
-            set: function set(value) {
-                this.name = value;
-            }
-        }]);
-
-        return _Parent5;
-    }();
-
-    var v = new _Parent5();
-    console.log('getter', v.longName);
-
-    v.longName = 'hello world';
-    console.log('setter', v.longName);
-}
-{
-    //静态方法
-    var _Parent6 = function () {
-        function _Parent6() {
-            var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'liulian';
-
-            _classCallCheck(this, _Parent6);
-
-            this.name = name;
-        }
-
-        _createClass(_Parent6, null, [{
-            key: 'tell',
-            value: function tell() {
-                console.log('tell');
-            }
-        }]);
-
-        return _Parent6;
-    }();
-
-    _Parent6.tell();
-}
-{
-    //静态属性
-    var _Parent7 = function () {
-        function _Parent7() {
-            var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'liulian';
-
-            _classCallCheck(this, _Parent7);
-
-            this.name = name;
-        }
-
-        _createClass(_Parent7, null, [{
-            key: 'tell',
-            value: function tell() {
-                console.log('tell');
-            }
-        }]);
-
-        return _Parent7;
-    }();
-
-    _Parent7.type = 'test';
-    console.log(_Parent7.type);
+    Promise.race([_loadImage('http://pic29.photophoto.cn/20131204/0034034499213463_b.jpg'), _loadImage('http://pic2.ooopic.com/12/42/25/02bOOOPIC95_1024.jpg'), _loadImage('http://img3.3lian.com/2013/c2/78/d/38.jpg')]).then(showImage);
 }
 
 /***/ })
