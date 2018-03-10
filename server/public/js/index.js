@@ -9596,92 +9596,80 @@ module.exports = function (regExp, replace) {
 "use strict";
 
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
+// {
+//     let arr = ['hello','world'];
+//     let map = arr[Symbol.iterator]();
+//     console.log(map.next());
+//     console.log(map.next());
+//     console.log(map.next());
+// }
+// {
+//     let obj = {
+//         start:[1,3,2],
+//         end:[7,9,8],
+//         [Symbol.iterator](){
+//             let self = this;
+//             let index = 0;
+//             let arr = self.start.concat(self.end);
+//             let len = arr.length;
+//             return{
+//                 next(){
+//                     if(index<len){
+//                         return {
+//                             value:arr[index++],
+//                             done:false
+//                         }
+//                     }else {
+//                         return{
+//                             value:arr[index++],
+//                             done:true
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//     }
+//     for(let key of obj){
+//         console.log(key);
+//     }
+// }
 {
-    var arr = ['hello', 'world'];
-    var map = arr[Symbol.iterator]();
-    console.log(map.next());
-    console.log(map.next());
-    console.log(map.next());
+    //字符串的iterator
+    var someString = 'hi';
+    // console.log(typeof someString[Symbol.iterator]);//function
+    var iter = someString[Symbol.iterator]();
+    console.log(iter.next());
+    console.log(iter.next());
+    console.log(iter.next());
 }
 {
-    var obj = _defineProperty({
-        start: [1, 3, 2],
-        end: [7, 9, 8]
-    }, Symbol.iterator, function () {
-        var self = this;
-        var index = 0;
-        var arr = self.start.concat(self.end);
-        var len = arr.length;
+    //修改方法达到修改遍历器的目的
+    var str = new String('hi');
+    console.log([].concat(_toConsumableArray(str))); //hi
+    str[Symbol.iterator] = function () {
         return {
             next: function next() {
-                if (index < len) {
-                    return {
-                        value: arr[index++],
-                        done: false
-                    };
+                if (this._first) {
+                    this._first = false;
+                    return { value: 'bye', done: false };
                 } else {
-                    return {
-                        value: arr[index++],
-                        done: true
-                    };
+                    return { done: true };
                 }
-            }
+            },
+            _first: true
         };
-    });
-    var _iteratorNormalCompletion = true;
-    var _didIteratorError = false;
-    var _iteratorError = undefined;
-
-    try {
-        for (var _iterator = obj[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var key = _step.value;
-
-            console.log(key);
-        }
-    } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-    } finally {
-        try {
-            if (!_iteratorNormalCompletion && _iterator.return) {
-                _iterator.return();
-            }
-        } finally {
-            if (_didIteratorError) {
-                throw _iteratorError;
-            }
-        }
-    }
+    };
+    console.log([].concat(_toConsumableArray(str))); //bye
+    console.log(str); //hi
 }
-{
-    var _arr = ['hello', 'world'];
-    var _iteratorNormalCompletion2 = true;
-    var _didIteratorError2 = false;
-    var _iteratorError2 = undefined;
-
-    try {
-        for (var _iterator2 = _arr[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-            var value = _step2.value;
-
-            console.log('value', value);
-        }
-    } catch (err) {
-        _didIteratorError2 = true;
-        _iteratorError2 = err;
-    } finally {
-        try {
-            if (!_iteratorNormalCompletion2 && _iterator2.return) {
-                _iterator2.return();
-            }
-        } finally {
-            if (_didIteratorError2) {
-                throw _iteratorError2;
-            }
-        }
-    }
-}
+// {
+//     let arr = ['hello','world'];
+//     for(let value of arr){
+//         console.log('value',value);
+//     }
+// }
 
 /***/ })
 /******/ ]);
