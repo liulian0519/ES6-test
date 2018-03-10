@@ -9596,80 +9596,118 @@ module.exports = function (regExp, replace) {
 "use strict";
 
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 // {
-//     let arr = ['hello','world'];
-//     let map = arr[Symbol.iterator]();
-//     console.log(map.next());
-//     console.log(map.next());
-//     console.log(map.next());
+//     let tell = function* () {
+//         yield 'a';
+//         yield 'b';
+//         return 'c';
+//     };
+//     let k = tell();
+//     console.log(k.next());
+//     console.log(k.next());
+//     console.log(k.next());
+//     console.log(k.next());
 // }
 // {
-//     let obj = {
-//         start:[1,3,2],
-//         end:[7,9,8],
-//         [Symbol.iterator](){
-//             let self = this;
-//             let index = 0;
-//             let arr = self.start.concat(self.end);
-//             let len = arr.length;
-//             return{
-//                 next(){
-//                     if(index<len){
-//                         return {
-//                             value:arr[index++],
-//                             done:false
-//                         }
-//                     }else {
-//                         return{
-//                             value:arr[index++],
-//                             done:true
-//                         }
-//                     }
-//                 }
-//             }
-//         }
+//     let obj={};
+//     obj[Symbol.iterator]=function* () {
+//         yield 1;
+//         yield 2;
+//         yield 3;
 //     }
-//     for(let key of obj){
-//         console.log(key);
-//     }
-// }
-{
-    //字符串的iterator
-    var someString = 'hi';
-    // console.log(typeof someString[Symbol.iterator]);//function
-    var iter = someString[Symbol.iterator]();
-    console.log(iter.next());
-    console.log(iter.next());
-    console.log(iter.next());
-}
-{
-    //修改方法达到修改遍历器的目的
-    var str = new String('hi');
-    console.log([].concat(_toConsumableArray(str))); //hi
-    str[Symbol.iterator] = function () {
-        return {
-            next: function next() {
-                if (this._first) {
-                    this._first = false;
-                    return { value: 'bye', done: false };
-                } else {
-                    return { done: true };
-                }
-            },
-            _first: true
-        };
-    };
-    console.log([].concat(_toConsumableArray(str))); //bye
-    console.log(str); //hi
-}
-// {
-//     let arr = ['hello','world'];
-//     for(let value of arr){
+//     for(let value of obj){
 //         console.log('value',value);
 //     }
 // }
+// {
+//     let status = function* (){
+//         while(1){
+//             yield 'A';
+//             yield 'B';
+//             yield 'C'
+//         }
+//     }
+//     let sta = status();
+//     console.log(sta.next());
+//     console.log(sta.next());
+//     console.log(sta.next());
+//     console.log(sta.next());
+//     console.log(sta.next());
+// }
+// {
+//     let status = async function (){
+//         while(1){
+//             await 'A';
+//             await 'B';
+//             await 'C'
+//         }
+//     }
+//     let sta = status();
+//     console.log(sta.next());
+//     console.log(sta.next());
+//     console.log(sta.next());
+//     console.log(sta.next());
+//     console.log(sta.next());
+// }
+// {
+//     //抽奖次数限制
+//     let draw = function (count) {
+//         //具体抽奖逻辑
+//         console.log(`剩余${count}次`);
+//     }
+//     let residue = function* (count) {
+//         while(count>0){
+//             count--;
+//             yield draw(count);
+//         }
+//     }
+//     let star = residue(5);
+//     let btn = document.createElement('button');
+//     btn.id = 'start';
+//     btn.textContent = '抽奖';
+//     document.body.appendChild(btn);
+//     document.getElementById('start').addEventListener('click',function () {
+//         star.next();
+//     },false)
+//
+// }
+{
+    //长轮询
+    var ajax = /*#__PURE__*/regeneratorRuntime.mark(function ajax() {
+        return regeneratorRuntime.wrap(function ajax$(_context) {
+            while (1) {
+                switch (_context.prev = _context.next) {
+                    case 0:
+                        _context.next = 2;
+                        return new Promise(function (resolve, reject) {
+                            setTimeout(function () {
+                                resolve({ code: 0 });
+                            }, 200);
+                        });
+
+                    case 2:
+                    case 'end':
+                        return _context.stop();
+                }
+            }
+        }, ajax, this);
+    });
+    var pull = function pull() {
+        var generataor = ajax();
+        var step = generataor.next();
+        step.value.then(function (d) {
+            if (d.code != 0) {
+                setTimeout(function () {
+                    console.log('wait');
+                    pull();
+                }, 1000);
+            } else {
+                console.log(d);
+            }
+        });
+    };
+    pull();
+}
 
 /***/ })
 /******/ ]);
