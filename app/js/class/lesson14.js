@@ -5,6 +5,7 @@
 //     console.log(map.next());
 //     console.log(map.next());
 // }
+//自定义部署iterator接口
 // {
 //     let obj = {
 //         start:[1,3,2],
