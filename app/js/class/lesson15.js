@@ -85,6 +85,7 @@
     let pull = function () {
         let generataor = ajax();
         let step = generataor.next();
+        console.log(step); //返回一个promise对象
         step.value.then(function (d) {
             if(d.code!=0){
                 setTimeout(function () {
